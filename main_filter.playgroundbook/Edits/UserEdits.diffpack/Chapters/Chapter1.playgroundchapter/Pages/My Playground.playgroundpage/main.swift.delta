@@ -25,20 +25,33 @@ extension UIImage {
         return [CGFloat(bitmap[0]) / 255, CGFloat(bitmap[1]) / 255, CGFloat(bitmap[2]) / 255, CGFloat(bitmap[3]) / 255]
     }
 }
-func predict()-&gt;String {
-    let uiImage3 = UIImage(named: "yellow.jpg")!
+func predict(inputImage:UIImage)-&gt;String {
     let filter = CustomFilters()
-    let out = filter.yellow_mask(inputImage: uiImage3)
-    let avgList=out.averageColor
-    print(avgList![0]+avgList![1]+avgList![2])
-    return "here"
+    let rOut = filter.red_mask(inputImage: inputImage)
+    let yOut = filter.yellow_mask(inputImage: inputImage)
+    let gOut = filter.green_mask(inputImage: inputImage)
+//      struct rygAvg{
+//          let color: String
+//          let avg: CGFloat
+//      }
+//      var colorList = [
+//          rygAvg(color:"red",avg:rOut.averageColor![0]),
+//          rygAvg(color: "yellow", avg: yOut.averageColor![0]),
+//          rygAvg(color:"green",avg:gOut.averageColor![0])
+//      ]
+    var rygList=["red":rOut.averageColor![0], "yellow":yOut.averageColor![0], "green":gOut.averageColor![0]
+    ]
+    let maxColor = rygList.max { a, b in a.value &lt; b.value }
+    
+    return maxColor!.key
 }
+let image = UIImage(named: "yellow.jpg")!
 
-predict()
+print(predict(inputImage: image))
 
 </string>
 			<key>ModifiedRange</key>
-			<string>{1, 1280}</string>
+			<string>{1, 1849}</string>
 			<key>OriginalContent</key>
 			<string></string>
 			<key>OriginalRange</key>
