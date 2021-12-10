@@ -10,45 +10,35 @@
 import CoreImage.CIFilterBuiltins
 import UIKit
 
-public class CustomFilters{
-    public var masks: CustomMasks
-    public init(){
-        self.masks = CustomMasks()
+extension UIImage {
+    var averageColor: [CGFloat]? {
+        guard let inputImage = self.ciImage else { return nil }
+        let extentVector = CIVector(x: inputImage.extent.origin.x, y: inputImage.extent.origin.y, z: inputImage.extent.size.width, w: inputImage.extent.size.height)
+        
+        guard let filter = CIFilter(name: "CIAreaAverage", parameters: [kCIInputImageKey: inputImage, kCIInputExtentKey: extentVector]) else { return nil }
+        guard let outputImage = filter.outputImage else { return nil }
+        
+        var bitmap = [UInt8](repeating: 0, count: 4)
+        let context = CIContext(options: [.workingColorSpace: kCFNull])
+        context.render(outputImage, toBitmap: &amp;bitmap, rowBytes: 4, bounds: CGRect(x: 0, y: 0, width: 1, height: 1), format: .RGBA8, colorSpace: nil)
+        
+        return [CGFloat(bitmap[0]) / 255, CGFloat(bitmap[1]) / 255, CGFloat(bitmap[2]) / 255, CGFloat(bitmap[3]) / 255]
     }
-    func red_mask(inputImage: UIImage)-&gt;UIImage {
-        guard let ciInputImage = CIImage(image: inputImage) else { return &lt;#default value#&gt; }
-        let filtered = self.masks.red(ciInputImage: ciInputImage)
-        let filteredImage = UIImage(ciImage: filtered)
-        return filteredImage
-    }
-    
-    func green_mask(inputImage: UIImage)-&gt;UIImage {
-        guard let ciInputImage = CIImage(image: inputImage) else { return &lt;#default value#&gt; }
-        let filtered = self.masks.green(ciInputImage: ciInputImage)
-        let filteredImage = UIImage(ciImage: filtered)
-        return filteredImage
-    }
-    
-    func yellow_mask(inputImage: UIImage)-&gt;UIImage {
-        guard let ciInputImage = CIImage(image: inputImage) else { return &lt;#default value#&gt; }
-        let filtered = self.masks.yellow(ciInputImage: ciInputImage)
-        let filteredImage = UIImage(ciImage: filtered)
-        return filteredImage
-    }
-    
-    //  let uiImage = UIImage(named: "red_light.jpg")
-    //  let output = red_mask(inputImage: uiImage!)
-    //  
-    //  let uiImage2 = UIImage(named: "red.jpg")
-    //  let output2 = red_mask(inputImage: uiImage2!)
 }
-let filter = CustomFilters()
+func predict()-&gt;String {
+    let uiImage3 = UIImage(named: "yellow.jpg")!
+    let filter = CustomFilters()
+    let out = filter.yellow_mask(inputImage: uiImage3)
+    let avgList=out.averageColor
+    print(avgList![0]+avgList![1]+avgList![2])
+    return "here"
+}
 
-let uiImage3 = UIImage(named: "yellow.jpg")
-let output3 = filter.yellow_mask(inputImage: uiImage3!)
+predict()
+
 </string>
 			<key>ModifiedRange</key>
-			<string>{1, 1462}</string>
+			<string>{1, 1280}</string>
 			<key>OriginalContent</key>
 			<string></string>
 			<key>OriginalRange</key>
