@@ -26,7 +26,7 @@
 			</dict>
 			<dict>
 				<key>File</key>
-				<string>UserModules/UserModule.playgroundmodule/Sources/customFilter.swift</string>
+				<string>UserModules/UserModule.playgroundmodule/Sources/customMasks.swift</string>
 			</dict>
 		</array>
 		<key>Modified</key>

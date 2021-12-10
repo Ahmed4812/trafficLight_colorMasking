@@ -43,7 +43,7 @@ var yellowKernel_str =
         """
 
 
-public class CustomFilters {
+public class CustomMasks{
     public var redKernel: CIColorKernel;
     public var greenKernel: CIColorKernel;
     public var yellowKernel: CIColorKernel;
@@ -53,24 +53,24 @@ public class CustomFilters {
         self.yellowKernel = CIColorKernel(source: yellowKernel_str)!
     }
     
-    public func redFilter(ciInputImage: CIImage)->CIImage{
-        let ciImageFiltered = self.redKernel.apply(
+    public func red(ciInputImage: CIImage)->CIImage{
+        let ciImageMasked = self.redKernel.apply(
             extent: ciInputImage.extent,
             arguments: [ciInputImage])!
-        return ciImageFiltered
+        return ciImageMasked
     }
     
-    public func yellowFilter(ciInputImage: CIImage)->CIImage{
-        let ciImageFiltered = self.yellowKernel.apply(
+    public func yellow(ciInputImage: CIImage)->CIImage{
+        let ciImageMasked = self.yellowKernel.apply(
             extent: ciInputImage.extent,
             arguments: [ciInputImage])!
-        return ciImageFiltered
+        return ciImageMasked
     }
     
-    public func greenFilter(ciInputImage: CIImage)->CIImage{
-        let ciImageFiltered = self.greenKernel.apply(
+    public func green(ciInputImage: CIImage)->CIImage{
+        let ciImageMasked = self.greenKernel.apply(
             extent: ciInputImage.extent,
             arguments: [ciInputImage])!
-        return ciImageFiltered
+        return ciImageMasked
     }
 }

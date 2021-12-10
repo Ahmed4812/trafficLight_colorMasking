@@ -10,41 +10,45 @@
 import CoreImage.CIFilterBuiltins
 import UIKit
 
-
-func red_mask(inputImage: UIImage)-&gt;UIImage {
-    guard let ciInputImage = CIImage(image: inputImage) else { return &lt;#default value#&gt; }
-    let filtered = customFilter.redFilter(ciInputImage: ciInputImage)
-    let filteredImage = UIImage(ciImage: filtered)
-    return filteredImage
+public class CustomFilters{
+    public var masks: CustomMasks
+    public init(){
+        self.masks = CustomMasks()
+    }
+    func red_mask(inputImage: UIImage)-&gt;UIImage {
+        guard let ciInputImage = CIImage(image: inputImage) else { return &lt;#default value#&gt; }
+        let filtered = self.masks.red(ciInputImage: ciInputImage)
+        let filteredImage = UIImage(ciImage: filtered)
+        return filteredImage
+    }
+    
+    func green_mask(inputImage: UIImage)-&gt;UIImage {
+        guard let ciInputImage = CIImage(image: inputImage) else { return &lt;#default value#&gt; }
+        let filtered = self.masks.green(ciInputImage: ciInputImage)
+        let filteredImage = UIImage(ciImage: filtered)
+        return filteredImage
+    }
+    
+    func yellow_mask(inputImage: UIImage)-&gt;UIImage {
+        guard let ciInputImage = CIImage(image: inputImage) else { return &lt;#default value#&gt; }
+        let filtered = self.masks.yellow(ciInputImage: ciInputImage)
+        let filteredImage = UIImage(ciImage: filtered)
+        return filteredImage
+    }
+    
+    //  let uiImage = UIImage(named: "red_light.jpg")
+    //  let output = red_mask(inputImage: uiImage!)
+    //  
+    //  let uiImage2 = UIImage(named: "red.jpg")
+    //  let output2 = red_mask(inputImage: uiImage2!)
 }
-
-func green_mask(inputImage: UIImage)-&gt;UIImage {
-    guard let ciInputImage = CIImage(image: inputImage) else { return &lt;#default value#&gt; }
-    let filtered = customFilter.greenFilter(ciInputImage: ciInputImage)
-    let filteredImage = UIImage(ciImage: filtered)
-    return filteredImage
-}
-
-func yellow_mask(inputImage: UIImage)-&gt;UIImage {
-    guard let ciInputImage = CIImage(image: inputImage) else { return &lt;#default value#&gt; }
-    let filtered = customFilter.yellowFilter(ciInputImage: ciInputImage)
-    let filteredImage = UIImage(ciImage: filtered)
-    return filteredImage
-}
-
-let customFilter = CustomFilters()
-
-//  let uiImage = UIImage(named: "red_light.jpg")
-//  let output = red_mask(inputImage: uiImage!)
-//  
-//  let uiImage2 = UIImage(named: "red.jpg")
-//  let output2 = red_mask(inputImage: uiImage2!)
+let filter = CustomFilters()
 
 let uiImage3 = UIImage(named: "yellow.jpg")
-let output3 = yellow_mask(inputImage: uiImage3!)
+let output3 = filter.yellow_mask(inputImage: uiImage3!)
 </string>
 			<key>ModifiedRange</key>
-			<string>{1, 1259}</string>
+			<string>{1, 1462}</string>
 			<key>OriginalContent</key>
 			<string></string>
 			<key>OriginalRange</key>
