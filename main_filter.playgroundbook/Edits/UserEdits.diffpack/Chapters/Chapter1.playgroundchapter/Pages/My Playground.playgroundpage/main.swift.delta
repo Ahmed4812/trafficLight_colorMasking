@@ -10,47 +10,58 @@
 import CoreImage.CIFilterBuiltins
 import UIKit
 
-extension UIImage {
-    var averageColor: [CGFloat]? {
-        guard let inputImage = self.ciImage else { return nil }
-        
-        let extentVector = CIVector(x: inputImage.extent.origin.x, y: inputImage.extent.origin.y, z: inputImage.extent.size.width, w: inputImage.extent.size.height)
-        
-        guard let filter = CIFilter(name: "CIAreaAverage", parameters: [kCIInputImageKey: inputImage, kCIInputExtentKey: extentVector]) else { return nil }
-        
-        guard let outputImage = filter.outputImage else { return nil }
-        
-        var bitmap = [UInt8](repeating: 0, count: 4)
-        let context = CIContext(options: [.workingColorSpace: kCFNull])
-        context.render(outputImage, toBitmap: &amp;bitmap, rowBytes: 4, bounds: CGRect(x: 0, y: 0, width: 1, height: 1), format: .RGBA8, colorSpace: nil)
-        
-        return [CGFloat(bitmap[0]) / 255, CGFloat(bitmap[1]) / 255, CGFloat(bitmap[2]) / 255, CGFloat(bitmap[3]) / 255]
-    }
-}
+//  public class Test{
+//      
+//  }
 
-
-
-func predict(inputImage:UIImage)-&gt;String {
-    let filter = CustomFilters()
-    let rOut = filter.red_mask(inputImage: inputImage)
-    let yOut = filter.yellow_mask(inputImage: inputImage)
-    let gOut = filter.green_mask(inputImage: inputImage)
-    var rygList=["red":rOut.averageColor![0], "yellow":yOut.averageColor![0], "green":gOut.averageColor![0]
-    ]
-    let maxColor = rygList.max { a, b in a.value &lt; b.value }
-    if (maxColor!.value==0.0){
-        return "Not Sure"
-    }
-    return maxColor!.key
-}
 let image = UIImage(named: "yellow.jpg")!
+func writeImage(_ image: UIImage, name: String) {
+    if name.isEmpty || name.count &lt; 3 {
+        print("Name cannot be empty or less than 3 characters.")
+        return
+    }
+    let documentsDirectory =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("fileTry")
+    
+    if !FileManager.default.fileExists(atPath: documentsDirectory.absoluteString) {
+        try! FileManager.default.createDirectory(at: documentsDirectory, withIntermediateDirectories: true, attributes: nil)
+    }
+    
+    let imagePath = documentsDirectory.appendingPathComponent("\(name).png")
+    let imagedata = image.jpegData(compressionQuality: 1.0)
+    do {
+        try imagedata?.write(to: imagePath)
+        print("Image successfully written to path:\n\n \(documentsDirectory) \n\n")
+    } catch {
+        print("Error writing image: \(error)")
+    }
+}
+writeImage(image, name: "fileTry\test5")
 
-print(predict(inputImage: image))
+//  import PlaygroundSupport
+//  let filepath = playgroundSharedDataDirectory.appendingPathComponent("export.jpg")
+//  let imagedata = image.jpegData(compressionQuality: 1.0)
+//  try! imagedata?.write(to: URL.init(fileURLWithPath: filepath.path))
+//  print("write to \(filepath)")
 
 
+
+//  print(predict(inputImage: image))
+
+
+//  let paths = Bundle.main.paths(forResourcesOfType: "jpg", inDirectory: nil)
+//  var red_arr: [Double] = []
+//  var green_arr: [Double] = []
+//  for path in paths{
+//      let image=UIImage(named: path)
+//      let color = image?.averageColor
+//      red_arr.append((color?[0])!)
+//      green_arr.append(color![1])
+//      
+//  }
+//  
 </string>
 			<key>ModifiedRange</key>
-			<string>{1, 1617}</string>
+			<string>{1, 1732}</string>
 			<key>OriginalContent</key>
 			<string></string>
 			<key>OriginalRange</key>

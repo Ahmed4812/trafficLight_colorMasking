@@ -37,8 +37,8 @@ func predict(inputImage:UIImage)->String {
     }
     return maxColor!.key
 }
-let image = UIImage(named: "yellow.jpg")!
-
-print(predict(inputImage: image))
+//  let image = UIImage(named: "yellow.jpg")!
+//  
+//  print(predict(inputImage: image))
 
 
