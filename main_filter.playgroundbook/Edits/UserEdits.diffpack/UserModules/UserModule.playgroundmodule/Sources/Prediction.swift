@@ -24,7 +24,7 @@ extension UIImage {
 
 
 
-func predict(inputImage:UIImage)->String {
+public func predict(inputImage:UIImage)->String {
     let filter = CustomFilters()
     let rOut = filter.red_mask(inputImage: inputImage)
     let yOut = filter.yellow_mask(inputImage: inputImage)

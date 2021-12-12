@@ -14,54 +14,71 @@ import UIKit
 //      
 //  }
 
-let image = UIImage(named: "yellow.jpg")!
-func writeImage(_ image: UIImage, name: String) {
+//  let image = UIImage(named: "yellow.jpg")!
+func writeImage(_ image: UIImage, name: String, folder: String) {
     if name.isEmpty || name.count &lt; 3 {
         print("Name cannot be empty or less than 3 characters.")
         return
     }
-    let documentsDirectory =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("fileTry")
+    let documentsDirectory =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(folder)
     
     if !FileManager.default.fileExists(atPath: documentsDirectory.absoluteString) {
         try! FileManager.default.createDirectory(at: documentsDirectory, withIntermediateDirectories: true, attributes: nil)
     }
     
-    let imagePath = documentsDirectory.appendingPathComponent("\(name).png")
+    let imagePath = documentsDirectory.appendingPathComponent(name)
     let imagedata = image.jpegData(compressionQuality: 1.0)
     do {
         try imagedata?.write(to: imagePath)
-        print("Image successfully written to path:\n\n \(documentsDirectory) \n\n")
+//          print("Image successfully written to path:\n\n \(documentsDirectory) \n\n")
     } catch {
         print("Error writing image: \(error)")
     }
 }
-writeImage(image, name: "fileTry\test5")
+//  writeImage(image, name: "fileTry\test5")
 
-//  import PlaygroundSupport
-//  let filepath = playgroundSharedDataDirectory.appendingPathComponent("export.jpg")
-//  let imagedata = image.jpegData(compressionQuality: 1.0)
-//  try! imagedata?.write(to: URL.init(fileURLWithPath: filepath.path))
-//  print("write to \(filepath)")
+
+func test_light(light:String){
+    let paths = Bundle.main.paths(forResourcesOfType: "jpg", inDirectory: light)
+    var total=0
+    var wrong_total=0
+    var image_name = ""
+    for img_path in paths{
+        total += 1
+        guard let image = UIImage(named: img_path) else { return }
+        image_name = String(img_path.split(separator: "/").last!) 
+        let predicted_light = predict(inputImage: image)
+        if (predicted_light != light){
+            wrong_total += 1
+            writeImage(image, name: predicted_light+image_name, folder: "wrong"+light)
+        }
+    }
+    print(light, total, wrong_total)
+}
 
 
 
 //  print(predict(inputImage: image))
+//  let LIGHTS=["red","yellow","green"]
 
+let LIGHTS=["red","yellow","green"]
+func test(){
+    for light in LIGHTS{
+        test_light(light: light)
+    }
+}
+test()
 
-//  let paths = Bundle.main.paths(forResourcesOfType: "jpg", inDirectory: nil)
-//  var red_arr: [Double] = []
-//  var green_arr: [Double] = []
+//  let paths = Bundle.main.paths(forResourcesOfType: "jpg", inDirectory: "test")
+////  var red_arr: [Double] = []
+////  var green_arr: [Double] = []
 //  for path in paths{
 //      let image=UIImage(named: path)
-//      let color = image?.averageColor
-//      red_arr.append((color?[0])!)
-//      green_arr.append(color![1])
-//      
 //  }
 //  
 </string>
 			<key>ModifiedRange</key>
-			<string>{1, 1732}</string>
+			<string>{1, 2136}</string>
 			<key>OriginalContent</key>
 			<string></string>
 			<key>OriginalRange</key>
