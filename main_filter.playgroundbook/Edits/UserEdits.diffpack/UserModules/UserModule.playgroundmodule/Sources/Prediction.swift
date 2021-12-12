@@ -1,12 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>Diff</key>
-	<array>
-		<dict>
-			<key>ModifiedContent</key>
-			<string>import CoreImage
+
+
+import CoreImage
 import CoreImage.CIFilterBuiltins
 import UIKit
 
@@ -22,7 +16,7 @@ extension UIImage {
         
         var bitmap = [UInt8](repeating: 0, count: 4)
         let context = CIContext(options: [.workingColorSpace: kCFNull])
-        context.render(outputImage, toBitmap: &amp;bitmap, rowBytes: 4, bounds: CGRect(x: 0, y: 0, width: 1, height: 1), format: .RGBA8, colorSpace: nil)
+        context.render(outputImage, toBitmap: &bitmap, rowBytes: 4, bounds: CGRect(x: 0, y: 0, width: 1, height: 1), format: .RGBA8, colorSpace: nil)
         
         return [CGFloat(bitmap[0]) / 255, CGFloat(bitmap[1]) / 255, CGFloat(bitmap[2]) / 255, CGFloat(bitmap[3]) / 255]
     }
@@ -30,14 +24,14 @@ extension UIImage {
 
 
 
-func predict(inputImage:UIImage)-&gt;String {
+func predict(inputImage:UIImage)->String {
     let filter = CustomFilters()
     let rOut = filter.red_mask(inputImage: inputImage)
     let yOut = filter.yellow_mask(inputImage: inputImage)
     let gOut = filter.green_mask(inputImage: inputImage)
     var rygList=["red":rOut.averageColor![0], "yellow":yOut.averageColor![0], "green":gOut.averageColor![0]
     ]
-    let maxColor = rygList.max { a, b in a.value &lt; b.value }
+    let maxColor = rygList.max { a, b in a.value < b.value }
     if (maxColor!.value==0.0){
         return "Not Sure"
     }
@@ -48,16 +42,3 @@ let image = UIImage(named: "yellow.jpg")!
 print(predict(inputImage: image))
 
 
-</string>
-			<key>ModifiedRange</key>
-			<string>{1, 1617}</string>
-			<key>OriginalContent</key>
-			<string></string>
-			<key>OriginalRange</key>
-			<string>{1, 0}</string>
-		</dict>
-	</array>
-	<key>File</key>
-	<string>Chapters/Chapter1.playgroundchapter/Pages/My Playground.playgroundpage/main.swift</string>
-</dict>
-</plist>
