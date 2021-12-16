@@ -61,24 +61,47 @@ func test_light(light:String){
 //  print(predict(inputImage: image))
 //  let LIGHTS=["red","yellow","green"]
 
-let LIGHTS=["red","yellow","green"]
+let LIGHTS=["yellow","green"]
 func test(){
     for light in LIGHTS{
         test_light(light: light)
     }
 }
-test()
+//  test()
 
-//  let paths = Bundle.main.paths(forResourcesOfType: "jpg", inDirectory: "test")
-////  var red_arr: [Double] = []
-////  var green_arr: [Double] = []
-//  for path in paths{
-//      let image=UIImage(named: path)
-//  }
+
 //  
+//  let image = UIImage(named: "green.jpg")!
+//  
+//  public extension UIImage {
+//      convenience init?(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) {
+//          let rect = CGRect(origin: .zero, size: size)
+//          UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
+//          color.setFill()
+//          UIRectFill(rect)
+//          let image = UIGraphicsGetImageFromCurrentImageContext()
+//          UIGraphicsEndImageContext()
+//          
+//          guard let cgImage = image?.cgImage else { return nil }
+//          self.init(cgImage: cgImage)
+//      }
+//  }
+
+//  let whiteImage = UIImage(color: .white, size: CGSize(width: 200, height: 200))
+//  
+//  writeImage(whiteImage!, name: "white.jpg", folder: "test")
+//  let whitePic = UIImage(named: "white.jpg")!
+let redPic = UIImage(named: "red.jpg")
+//  let filter = CustomFilters()
+//  let filteredImg = filter.red_mask(inputImage: redPic!) 
+//  let resizedPic = redPic!.resizeImage(newWidth: 5)
+////  print(predict(inputImage: whitePic))
+//  print(get_color(image: resizedPic))
+//  
+print(predict(inputImage: redPic!))
 </string>
 			<key>ModifiedRange</key>
-			<string>{1, 2136}</string>
+			<string>{1, 3028}</string>
 			<key>OriginalContent</key>
 			<string></string>
 			<key>OriginalRange</key>

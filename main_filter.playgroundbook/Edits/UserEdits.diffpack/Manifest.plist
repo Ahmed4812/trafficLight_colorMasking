@@ -36,6 +36,10 @@
 				<key>File</key>
 				<string>UserModules/UserModule.playgroundmodule/Sources/Prediction.swift</string>
 			</dict>
+			<dict>
+				<key>File</key>
+				<string>UserModules/UserModule.playgroundmodule/Sources/imageColor.swift</string>
+			</dict>
 		</array>
 		<key>Modified</key>
 		<array>

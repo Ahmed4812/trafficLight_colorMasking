@@ -15,24 +15,40 @@ extension UIImage {
         guard let outputImage = filter.outputImage else { return nil }
         
         var bitmap = [UInt8](repeating: 0, count: 4)
+        
         let context = CIContext(options: [.workingColorSpace: kCFNull])
         context.render(outputImage, toBitmap: &bitmap, rowBytes: 4, bounds: CGRect(x: 0, y: 0, width: 1, height: 1), format: .RGBA8, colorSpace: nil)
         
         return [CGFloat(bitmap[0]) / 255, CGFloat(bitmap[1]) / 255, CGFloat(bitmap[2]) / 255, CGFloat(bitmap[3]) / 255]
     }
+    
 }
+
+
 
 
 
 public func predict(inputImage:UIImage)->String {
     let filter = CustomFilters()
+    
     let rOut = filter.red_mask(inputImage: inputImage)
     let yOut = filter.yellow_mask(inputImage: inputImage)
     let gOut = filter.green_mask(inputImage: inputImage)
-    var rygList=["red":rOut.averageColor![0], "yellow":yOut.averageColor![0], "green":gOut.averageColor![0]
+    
+    
+    let resRout = rOut.resizeImage(newWidth: 5)
+    let resGout = gOut.resizeImage(newWidth: 5)
+    let resYout = yOut.resizeImage(newWidth: 5)
+    
+    let rRGB = get_color(image: resRout)
+    let gRGB = get_color(image: resGout)
+    let yRGB = get_color(image: resYout)
+
+    var rygList=["red":rRGB![0], "yellow":yRGB![0], "green":gRGB![0]
     ]
     let maxColor = rygList.max { a, b in a.value < b.value }
-    if (maxColor!.value==0.0){
+    if (maxColor!.value == 0){
+        print(maxColor!.value)
         return "Not Sure"
     }
     return maxColor!.key
@@ -40,5 +56,6 @@ public func predict(inputImage:UIImage)->String {
 //  let image = UIImage(named: "yellow.jpg")!
 //  
 //  print(predict(inputImage: image))
-
-
+//  
+//  
+//  
